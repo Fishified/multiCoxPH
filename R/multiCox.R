@@ -8,7 +8,7 @@
 #' @keywords multCoxParallel
 #' @export
 #' @examples
-#' cat_function()
+#' multiCox()
 
 multiCox<-function(rawTerms,data,event,variable)
 {

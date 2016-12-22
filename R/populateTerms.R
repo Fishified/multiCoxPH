@@ -1,6 +1,6 @@
 #' Derive all possible combinations of base and interaction terms
 #'
-#' Allows you to study AIC output from any number of models.
+#' Allows you produce a list of all possible combinations of terms provided
 #' @param termsList - list of terms, include interactions with "*" or ":" as you see fit
 #' @param frailty - "True" includes frailty()
 #' @param frailtyTerm - indicates frailty term (e.g. "individual")

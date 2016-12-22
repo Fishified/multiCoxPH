@@ -14,10 +14,9 @@ populateTerms(termsList, frailty, frailtyTerm)
 \item{frailtyTerm}{- indicates frailty term (e.g. "individual")}
 }
 \description{
-Allows you to study AIC output from any number of models.
+Allows you produce a list of all possible combinations of terms provided
 }
 \examples{
 populateTerms()
 }
 \keyword{populateTerms()}
-

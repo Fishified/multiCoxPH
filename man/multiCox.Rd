@@ -19,7 +19,6 @@ multiCox(rawTerms, data, event, variable)
 Allows the study of AIC from any number of models. Can be faster than multiCoxParallel for smaller numbers of models.
 }
 \examples{
-cat_function()
+multiCox()
 }
 \keyword{multCoxParallel}
-
