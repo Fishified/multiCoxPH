@@ -12,7 +12,7 @@
 
 populateTerms<-function(termsList,frailty,frailtyTerm)
 { 
-  terms=c(termList)
+  terms=c(termsList)
   listLength=length(terms)
   a=c()
   foreach(i = 1:listLength) %do%
