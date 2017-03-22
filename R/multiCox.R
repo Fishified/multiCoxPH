@@ -5,33 +5,54 @@
 #' @param data - data set in the form of dataframe
 #' @param event - event variable indicating censorship
 #' @param variable - to perform regression on (e.g. Dmax)
+#' @param model - choose between "coxph" or "survreg"
 #' @keywords multCoxParallel
 #' @export
 #' @examples
 #' multiCox()
 
-multiCox<-function(rawTerms,data,event,variable)
+multiCox<-function(rawTerms,data,event,variable,model)
 {
-  C=length(rawTerms)
+  lnt=length(rawTerms)
   aicOutput=c()
   termsList=c()
   coxModels=c()
-  print(event)
   measurevar=paste("Surv(",variable,",","event=",event,"",")",sep="")
-  foreach(i = 1:C) %do%
-  {library(survival)
+  
+  #start outer loop for each list of sets terms
+  foreach(i = 1:lnt) %do%
+  {library(survival) #for some reason the survival library has to be loaded each time ...
     
+    #inner loop for each set of terms
     for (b in 1:ncol(rawTerms[[i]])){
       
+      #construct object to model
       tmpList=rawTerms[[i]][,b]
       terms=paste(tmpList, collapse=" + ")
       t=as.formula(paste(measurevar,terms,sep=" ~ "))
-      modeloutput=coxph(t, data = data)
-      aic=AIC(modeloutput)
-      aicOutput=c(aicOutput, aic)
-      coxModels=c(coxModels,modeloutput)
+      
+      #model choice
+      if (model=="coxph"){
+        modeloutput=coxph(t, data = data)
+        }
+      else if (model=="survreg"){
+        modeloutput=survreg(t,data=data)
+        }
+      
+      #construct model terms for output
+      a=modeloutput$terms
+      b=attr(a,"term.labels")
+      terms=paste(b, collapse=" + ")
       termsList=c(termsList,terms)
+      
+      #determine AIC for output
+      aic=AIC(modeloutput)
+      aic=round(aic, digits = 4)
+      aicOutput=c(aicOutput, aic)
+      
     }
   }
-  return(data.frame("AIC"=aicOutput, "Terms"=termsList))
+  
+  df=data.frame("AIC"=aicOutput, "Terms"=termsList)
+  return(subset(df, !duplicated(AIC))) #removes redundant models from df
 }
