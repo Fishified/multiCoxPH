@@ -1,5 +1,5 @@
 # multiCoxPH
-Various R functions to help run multiple regression models in R
+Various R functions to help analyze more than one regression model at a time in R
 
 To install run this lines in R:
 
